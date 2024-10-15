@@ -1,10 +1,13 @@
+
 #!/usr/bin/env bash
 echo "Running composer"
-composer global require hirak/prestissimo
+
+# Installing dependencies (no need for hirak/prestissimo if using Composer v2)
 composer install --no-dev --working-dir=/var/www/html
 
-echo "generating application key..."
-php artisan key:generate --show
+echo "Generating application key..."
+# This command will set the key in .env
+php artisan key:generate
 
 echo "Caching config..."
 php artisan config:cache
@@ -13,4 +16,5 @@ echo "Caching routes..."
 php artisan route:cache
 
 echo "Running migrations..."
+# Force flag to run migrations in production
 php artisan migrate --force
